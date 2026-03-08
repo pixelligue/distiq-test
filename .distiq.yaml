@@ -1,0 +1,29 @@
+language: ru
+auto_review: true
+ignore_drafts: true
+severity_threshold: nitpick
+full_context: true
+full_context_max_files: 10
+safeguard: true
+safeguard_threshold: 5
+
+review_passes:
+  enabled: true
+  passes:
+    - name: security
+      prompt: "Focus ONLY on security issues: injections, auth, secrets, crypto."
+      severity_boost: 1
+    - name: logic
+      prompt: "Focus ONLY on logic bugs: null checks, edge cases, race conditions."
+    - name: performance
+      prompt: "Focus ONLY on performance: N+1 queries, memory leaks, unnecessary allocations."
+
+path_instructions:
+  - path: "*.py"
+    instructions: "Enforce PEP 8, type hints on all public functions, docstrings required."
+  - path: "tests/"
+    instructions: "Use pytest, descriptive test names, no print statements."
+
+ignore_paths:
+  - "*.md"
+  - ".github/"
