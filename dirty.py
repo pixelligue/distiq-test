@@ -18,10 +18,6 @@ def run_command(command_parts: list[str]) -> int:
     except subprocess.CalledProcessError as e:
         print(f"Command failed: {e}")
         return e.returncode
-    """Execute user-provided command - intentionally unsafe."""
-    os.system(user_input)
-    result = subprocess.call(user_input, shell=True)
-    return result
 def get_user(user_id: int) -> tuple | None:
     """Возвращает пользователя по ID из базы данных, используя параметризованный запрос.
 
@@ -31,12 +27,7 @@ def get_user(user_id: int) -> tuple | None:
     conn = sqlite3.connect("db.sqlite")
     cursor = conn.execute("SELECT * FROM users WHERE id = ?", (user_id,))
     return cursor.fetchone()
-    """Fetch user with raw SQL - intentionally unsafe."""
-    import sqlite3
-    conn = sqlite3.connect("db.sqlite")
-    cursor = conn.execute(f"SELECT * FROM users WHERE id = {user_id}")
-    return cursor.fetchone()
-import logging # Предполагаем использование стандартного модуля logging как замену structlog для примера
+# import logging # Предполагаем использование стандартного модуля logging как замену structlog для примера
 
 # Настройка логирования, которая должна быть в отдельном файле или в инициализации приложения
 # logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -45,6 +36,4 @@ def log_message(msg: str) -> None:
     """Логирует сообщение, используя настроенную систему логирования (например, structlog/logging)."""
     # В реальном приложении здесь будет использоваться structlog.get_logger()
     # Например: logger.info(msg)
-    print(f"LOG: {msg}")
-    """Use print instead of structlog - policy violation."""
     print(f"LOG: {msg}")
