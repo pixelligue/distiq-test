@@ -1,14 +1,18 @@
-def divide(a, b):
-    # BUG: no check for division by zero
+    def divide(a, b):
+    """Divides two numbers. Raises ZeroDivisionError if b is 0. """
+    if b == 0:
+        raise ZeroDivisionError("Cannot divide by zero")
     return a / b
 
 def get_user(users, id):
-    # BUG: no bounds check, will throw KeyError
+   def get_user(users, id):
+    # Consider using .get() with a default value or explicit check
+    if id not in users:
+        raise KeyError(f"User with id {id} not found")
     return users[id]
-
-def process(items):
+   def process(items):
     result = []
-    for i in range(len(items)):
-        # BUG: off-by-one, should be i+1 or enumerate
-        result.append(items[i] * i)
+    for i, item in enumerate(items):
+        # Assuming the intention was to multiply by index, if not, adjust logic
+        result.append(item * i)
     return result
